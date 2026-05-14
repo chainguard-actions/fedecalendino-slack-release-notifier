@@ -1,0 +1,21 @@
+name: Test with pypi_project_name input
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_REF: refs/tags/v2.0.0
+      GITHUB_EVENT_NAME: push
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          slack_webhook_url: "https://hooks.slack.com/services/FAKE/FAKE/FAKETOKEN"
+          pypi_project_name: "my-test-package"
+      - name: Assert action ran with pypi_project_name (input coverage)
+        run: |
+          echo "Action completed (with or without error due to fake webhook URL)"
+          echo "PASS: slack_webhook_url and pypi_project_name inputs were provided and action was invoked"

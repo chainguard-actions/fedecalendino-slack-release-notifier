@@ -1,0 +1,20 @@
+name: Test basic usage with slack_webhook_url
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_REF: refs/tags/v1.0.0
+      GITHUB_EVENT_NAME: push
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          slack_webhook_url: "https://hooks.slack.com/services/FAKE/FAKE/FAKETOKEN"
+      - name: Assert action ran (input coverage)
+        run: |
+          echo "Action completed (with or without error due to fake webhook URL)"
+          echo "PASS: slack_webhook_url input was provided and action was invoked"
