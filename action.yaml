@@ -1,0 +1,16 @@
+name: "Slack Release Notifier"
+author: "Fede Calendino"
+description: "Notify a slack channel about a new release."
+inputs:
+  slack_webhook_url:
+    description: "URL provided by Slack's Incoming WebHooks app."
+    required: true
+  pypi_project_name:
+    description: "Name of the project in pypi.org. If present a link to it will be provided by the notification."
+    required: false
+runs:
+  using: "docker"
+  image: "Dockerfile"
+branding:
+  icon: "package"
+  color: "green"

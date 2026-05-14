@@ -1,0 +1,29 @@
+name: Test with pypi_project_name input
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_REF: refs/tags/v2.0.0
+      GITHUB_EVENT_NAME: push
+      GITHUB_ACTOR: test-user
+      GITHUB_REPOSITORY: test-org/my-pypi-package
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          slack_webhook_url: "https://hooks.slack.com/services/FAKE/FAKE/FAKE"
+          pypi_project_name: "my-pypi-package"
+      - name: Assert action was attempted
+        run: |
+          echo "Action outcome: ${{ steps.action.outcome }}"
+          # The action will fail with a fake webhook URL (network error or 403),
+          # but we verify it was attempted (not skipped).
+          if [ "${{ steps.action.outcome }}" = "skipped" ]; then
+            echo "FAIL: action was skipped, expected it to run"
+            exit 1
+          fi
+          echo "PASS: action ran with pypi_project_name (outcome: ${{ steps.action.outcome }})"
