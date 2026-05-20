@@ -1,7 +1,0 @@
-{
-  "owner": "fedecalendino",
-  "name": "slack-release-notifier",
-  "visibility": "public",
-  "description": "Notify a slack channel about a new release.",
-  "block_publish": false
-}
