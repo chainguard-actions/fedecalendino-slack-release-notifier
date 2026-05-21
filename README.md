@@ -8,9 +8,9 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 | Version | Tag | Upstream commit |
 |---------|-----|-----------------|
-| v2.0.2 | [`v2.0.2`](https://github.com/chainguard-actions/slack-release-notifier/tree/v2.0.2) | — |
-| v2.1.0 | [`v2.1.0`](https://github.com/chainguard-actions/slack-release-notifier/tree/v2.1.0) | — |
-| v3.0.2 | [`v3.0.2`](https://github.com/chainguard-actions/slack-release-notifier/tree/v3.0.2) | — |
+| v2.0.2 | [`v2.0.2`](https://github.com/chainguard-actions/fedecalendino--slack-release-notifier/tree/v2.0.2) | — |
+| v2.1.0 | [`v2.1.0`](https://github.com/chainguard-actions/fedecalendino--slack-release-notifier/tree/v2.1.0) | — |
+| v3.0.2 | [`v3.0.2`](https://github.com/chainguard-actions/fedecalendino--slack-release-notifier/tree/v3.0.2) | — |
 
 ## Privacy
 
