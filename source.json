@@ -1,0 +1,11 @@
+{
+  "owner": "fedecalendino",
+  "repo": "slack-release-notifier",
+  "version": "v3.0.2",
+  "commit_sha": "dce583202a14d0e0b4d8e81b402b6f7d9b8d9afa",
+  "url": "https://github.com/fedecalendino/slack-release-notifier",
+  "policy_sha": "d636be7e43ef829af6e853da6b3c7566db9f72fe",
+  "test_policy_sha": "843adf9e4b8f85d0c08b27b9d0b09dd094b54702",
+  "test_agent_version": "2",
+  "harden_agent_version": "2"
+}

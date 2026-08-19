@@ -1,4 +1,4 @@
-name: Test basic usage - fake webhook fails gracefully
+name: Test custom button parameters
 on:
   workflow_dispatch:
 jobs:
@@ -21,20 +21,23 @@ jobs:
         uses: .
         continue-on-error: true
         env:
-          GITHUB_REF: refs/tags/v1.0.0
-          GITHUB_ACTOR: test-user
+          GITHUB_REF: refs/tags/v2.5.0
+          GITHUB_ACTOR: release-bot
         with:
           slack_webhook_url: "https://hooks.slack.com/services/FAKE/FAKE/FAKE"
+          slack_button_text: "View Release"
+          slack_button_url: "https://example.com/releases/v2.5.0"
+          slack_button_emoji: ":rocket:"
 
-      - name: Assert action failed gracefully with fake webhook
+      - name: Assert action ran with custom button params
         env:
           OUTCOME: ${{ steps.action.outcome }}
         run: |
           echo "outcome: $OUTCOME"
           # The action should fail because the webhook URL is fake (HTTP error from Slack)
-          # but it should not crash with an unexpected error (e.g. missing env vars)
+          # but it should NOT crash due to the custom button parameters being invalid
           if [ "$OUTCOME" = "failure" ]; then
-            echo "PASS: action failed gracefully as expected with a fake webhook URL"
+            echo "PASS: action failed gracefully as expected (fake webhook, custom button params accepted)"
           elif [ "$OUTCOME" = "success" ]; then
             echo "PASS: action succeeded (real webhook accepted the request)"
           else

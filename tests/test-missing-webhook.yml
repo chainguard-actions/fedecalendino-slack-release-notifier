@@ -1,4 +1,4 @@
-name: Test basic usage - fake webhook fails gracefully
+name: Test missing required webhook URL fails with assertion error
 on:
   workflow_dispatch:
 jobs:
@@ -24,19 +24,22 @@ jobs:
           GITHUB_REF: refs/tags/v1.0.0
           GITHUB_ACTOR: test-user
         with:
-          slack_webhook_url: "https://hooks.slack.com/services/FAKE/FAKE/FAKE"
+          # Provide an empty string to trigger the assertion failure in actions.py
+          # PARAMS.slack_webhook_url assertion: assert slack_webhook_url, "SLACK_WEBHOOK_URL is not set"
+          slack_webhook_url: ""
 
-      - name: Assert action failed gracefully with fake webhook
+      - name: Assert action fails when webhook URL is empty
         env:
           OUTCOME: ${{ steps.action.outcome }}
         run: |
           echo "outcome: $OUTCOME"
-          # The action should fail because the webhook URL is fake (HTTP error from Slack)
-          # but it should not crash with an unexpected error (e.g. missing env vars)
+          # The action MUST fail when slack_webhook_url is empty because
+          # actions.py asserts: assert slack_webhook_url, "SLACK_WEBHOOK_URL is not set"
           if [ "$OUTCOME" = "failure" ]; then
-            echo "PASS: action failed gracefully as expected with a fake webhook URL"
+            echo "PASS: action correctly failed when slack_webhook_url is empty"
           elif [ "$OUTCOME" = "success" ]; then
-            echo "PASS: action succeeded (real webhook accepted the request)"
+            echo "FAIL: action should not succeed with an empty webhook URL"
+            exit 1
           else
             echo "FAIL: unexpected outcome '$OUTCOME'"
             exit 1
