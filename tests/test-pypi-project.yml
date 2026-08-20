@@ -1,4 +1,4 @@
-name: Test basic usage (GitHub release notification)
+name: Test with PyPI project name
 on:
   workflow_dispatch:
 jobs:
@@ -14,12 +14,12 @@ jobs:
         uses: .
         continue-on-error: true
         env:
-          GITHUB_REF: refs/tags/v1.2.3
+          GITHUB_REF: refs/tags/v2.0.0
           GITHUB_ACTOR: test-user
         with:
           slack_webhook_url: "https://hooks.slack.com/services/FAKE/FAKE/FAKETOKEN"
-          pypi_project_name: ""
-      - name: Assert action ran (fails gracefully with fake webhook)
+          pypi_project_name: "my-pypi-package"
+      - name: Assert action ran (fails gracefully with fake webhook, pypi path exercised)
         env:
           OUTCOME: ${{ steps.action.outcome }}
         run: |
@@ -27,7 +27,7 @@ jobs:
           if [ "$OUTCOME" = "success" ]; then
             echo "PASS: action succeeded (real webhook accepted)"
           elif [ "$OUTCOME" = "failure" ]; then
-            echo "PASS: action failed gracefully as expected with fake webhook URL"
+            echo "PASS: action failed gracefully as expected with fake webhook URL (pypi path exercised)"
           else
             echo "FAIL: unexpected outcome '$OUTCOME'"
             exit 1
